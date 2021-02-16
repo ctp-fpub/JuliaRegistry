@@ -1,0 +1,6 @@
+name = "JuliaRegistry"
+uuid = "6c45c01d-c5c2-4949-b2bc-3d9eb8e2d5ca"
+repo = "https://github.com/ctp-fpub/JuliaRegistry"
+description = "Julia package registry for the Centre for Theoretical Physics"
+
+[packages]
