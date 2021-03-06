@@ -4,4 +4,5 @@ repo = "https://github.com/ctp-fpub/JuliaRegistry"
 description = "Julia package registry for the Centre for Theoretical Physics"
 
 [packages]
+049d77de-c438-40ac-b6d1-f1d179569bd2 = { name = "PICAnalysisTools", path = "P/PICAnalysisTools" }
 7a8fc443-14dd-4e51-a296-5a2c4c9a1dbb = { name = "SDFResultViewer", path = "S/SDFResultViewer" }
