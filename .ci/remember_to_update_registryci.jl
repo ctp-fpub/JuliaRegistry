@@ -101,7 +101,7 @@ end
 function git_commit(message)::Bool
     return try
         git() do git
-            success(`gitcommit−m"(message)"`)
+            success(`$git commit -m "$(message)"`)
         end
     catch
         false
@@ -122,8 +122,8 @@ end
 
 function set_git_identity(username, email)
     git() do git
-        run(`gitconfiguser.name"(username)"`)
-        run(`gitconfiguser.email"(email)"`)
+        run(`$git config user.name "$(username)"`)
+        run(`$git config user.email "$(email)"`)
     end
     return nothing
 end
@@ -185,14 +185,14 @@ function main(relative_path;
     username_mentions_text = generate_username_mentions(cc_usernames)
 
     git() do git
-        run(`gitclone(registry_url_with_auth) REGISTRY`)
+        run(`$git clone $(registry_url_with_auth) REGISTRY`)
     end
     cd("REGISTRY")
     git() do git
-        run(`gitcheckout(master_branch)`)
+        run(`$git checkout $(master_branch)`)
     end
     git() do git
-        run(`gitcheckout−B(pr_branch)`)
+        run(`$git checkout -B $(pr_branch)`)
     end
     cd(relative_path)
     main_manifest = "Manifest.toml"
@@ -219,9 +219,9 @@ function main(relative_path;
     try
         git() do git
             if is_old_julia_version
-                run(`(git)add(old_manifest)`)
+                run(`$(git) add $(old_manifest)`)
             else
-                run(`(git)add(main_manifest)`)
+                run(`$(git) add $(main_manifest)`)
             end
         end
     catch
@@ -230,7 +230,7 @@ function main(relative_path;
     @info("commit_was_success: $(commit_was_success)")
     if commit_was_success
         git() do git
-            run(`gitpush−forigin(pr_branch)`)
+            run(`$git push -f origin $(pr_branch)`)
         end
         if pr_title in pr_titles
             @info("An open PR with the title already exists", pr_title)
