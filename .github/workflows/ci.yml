@@ -9,6 +9,11 @@ on:
   schedule:
     - cron: 0 0 * * *
 
+# Disable PkgServer to avoid random issues.
+# TODO: remove this when PkgServer feels better
+env:
+  JULIA_PKG_SERVER: ""
+
 jobs:
   CI:
     runs-on: ${{ matrix.os }}
