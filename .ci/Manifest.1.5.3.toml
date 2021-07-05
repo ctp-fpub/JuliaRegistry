@@ -38,9 +38,9 @@ deps = ["Random", "Serialization", "Sockets"]
 uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
 [[ExprTools]]
-git-tree-sha1 = "555eab1f7c501166ba87eeb5d561e9f5e7d167d3"
+git-tree-sha1 = "38fe9afc9bdf8708213ef9dcd5557da90ea6a2d5"
 uuid = "e2ba6199-217a-4e67-a87a-7c52f15ade04"
-version = "0.1.4"
+version = "0.1.5"
 
 [[EzXML]]
 deps = ["Printf", "XML2_jll"]
