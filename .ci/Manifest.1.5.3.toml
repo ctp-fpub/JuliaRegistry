@@ -50,9 +50,9 @@ version = "1.1.0"
 
 [[GitHub]]
 deps = ["Base64", "Dates", "HTTP", "JSON", "MbedTLS", "Sockets", "SodiumSeal"]
-git-tree-sha1 = "f05738d0ae676929ad1c8f956053d40b12ecda01"
+git-tree-sha1 = "9e62f3eae4a2514d1de65cc2ac9d1669032a4595"
 uuid = "bc5e4493-9b4d-5f90-b8aa-2b2bcaad7a26"
-version = "5.5.0"
+version = "5.6.0"
 
 [[HTTP]]
 deps = ["Base64", "Dates", "IniFile", "Logging", "MbedTLS", "NetworkOptions", "Sockets", "URIs"]
