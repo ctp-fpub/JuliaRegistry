@@ -15,5 +15,10 @@ PICDataStructures = "0.1-0.3"
 
 ["0.2-0"]
 FileTrees = "0.2-0.3"
-PICDataStructures = "0.1-0.4"
 ProgressLogging = "0.1"
+
+["0.2-0.3.0"]
+PICDataStructures = "0.1-0.4"
+
+["0.3.1-0"]
+PICDataStructures = "0.5"
