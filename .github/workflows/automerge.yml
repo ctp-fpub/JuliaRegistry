@@ -71,7 +71,7 @@ jobs:
             new_jll_package_waiting_period = Minute(20),
             new_version_waiting_period = Minute(5),
             new_jll_version_waiting_period = Minute(10),
-            registry = "ctp-fpub/JuliaRegistriy",
+            registry = "ctp-fpub/JuliaRegistry",
             tagbot_enabled = true,
             authorized_authors = String["SebastianM-C"],
             authorized_authors_special_jll_exceptions = String[""],
