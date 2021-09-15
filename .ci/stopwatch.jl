@@ -26,31 +26,30 @@ function _most_recent(registry::GitHub.Repo;
                     workflow_runs[1]["created_at"],
                     "yyyy-mm-ddTHH:MM:SSzzzz"
                 )
+                @info "# BEGIN information about the `workflow_run`"
+                @info "" created_at
+                for (key, value) in workflow_run
+                    @info "" key value
+                end
+                @info "# END information about the `workflow_run`"
                 return created_at
             end
         end
     end
-    throw(ErrorException("I could not figure out when the most recent AutoMerge cron job was"))
+    throw(ErrorException("I could not figure out when the most recent job was"))
 end
 
 function most_recent_automerge(registry::GitHub.Repo;
                                api::GitHub.GitHubAPI,
                                auth::GitHub.Authorization)
-    schedule = _most_recent(
-        registry;
-        api = api,
-        auth = auth,
-        event = "schedule",
-        workflow_name = "AutoMerge"
-    )
     workflow_dispatch = _most_recent(
         registry;
         api = api,
         auth = auth,
         event = "workflow_dispatch",
-        workflow_name = "AutoMerge"
+        workflow_name = "AutoMerge",
     )
-    return max(schedule, workflow_dispatch)
+    return workflow_dispatch
 end
 
 function time_since_last_automerge(registry::GitHub.Repo;
@@ -88,12 +87,8 @@ end
 
 function trigger_new_automerge_if_necessary()
     api = GitHub.DEFAULT_API
-    auth = GitHub.authenticate(ENV["AUTOMERGE_TAGBOT_TOKEN"])
-    registry = GitHub.repo(
-        api,
-        "JuliaRegistries/General";
-        auth = auth,
-    )
+    auth = GitHub.OAuth2(ENV["AUTOMERGE_TAGBOT_TOKEN"])
+    registry = GitHub.Repo("JuliaRegistries/General")
     t = time_since_last_automerge(
         registry;
         api,

@@ -1,33 +1,18 @@
-name: CI
+name: TagBot Triggers
 on:
   pull_request:
-    branches:
-      - master
-  push:
-    branches:
-      - master
+    types:
+      - closed
+  schedule:
+    - cron: 0 */4 * * *
   workflow_dispatch:
-
 jobs:
-  CI:
-    runs-on: ${{ matrix.os }}
+  trigger:
     timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        version:
-          - '1'
-          - 'nightly'
-        os:
-          - ubuntu-latest
-        arch:
-          - x64
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || github.event.pull_request.merged
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # v2.3.4
-      - uses: julia-actions/setup-julia@0b9b1d2cd24245f151902702d8e73b3f6b910014 # v1.6.0
-        with:
-          version: ${{ matrix.version }}
-          arch: ${{ matrix.arch }}
       - run: println("::set-output name=manifest_version::$(VERSION.major).$(VERSION.minor)")
         shell: julia --color=yes --project=.ci/ {0}
         id: manifest_version
@@ -54,4 +39,6 @@ jobs:
       - run: julia --color=yes -e 'import Pkg; Pkg.Registry.update()'
       - run: .ci/instantiate.sh
       - run: julia --color=yes --project=.ci/ -e 'import Pkg; Pkg.precompile()'
-      - run: julia --color=yes --project=.ci/ -e 'import RegistryCI; RegistryCI.test(registry_deps=["https://github.com/JuliaRegistries/General"])'
+      - run: julia --color=yes --project=.ci/ -e 'using RegistryCI.TagBot; TagBot.main()'
+        env:
+          GITHUB_TOKEN: ${{ secrets.TAGBOT_TOKEN }}
